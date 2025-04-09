@@ -1,0 +1,148 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SUBCOMMAND=${1:-help}
+
+# Increase timeout to ensure that all containers have time to create
+export COMPOSE_HTTP_TIMEOUT=180
+
+# Add support to CLI build https://github.com/docker/compose/pull/6865
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+USAGE="Usage: kds [COMMAND] [ARGS...]
+
+Manages a Docker-based KDS-pro environment.
+
+To get started, run:
+
+  kds pristine
+
+The dev environment will the be available at:
+
+  https://demo.lvh.me:3000
+
+Commands:
+  pristine           Start a clean environment and database (WARNING: destroys existing data!)
+
+Any unrecognized command will be passed through to docker compose. For example,
+to check the status of containers in the environment:
+
+  kds ps
+
+This invokes the 'docker compose ps' command and forwards any given arguments.
+
+For a list of available docker compose commands, run:
+
+  docker compose help"
+
+case "$SUBCOMMAND" in
+  help)
+    echo "$USAGE"
+  ;;
+  ssh)
+    shift
+    CMD="bash -l"
+    if [[ ! -z "$@" ]]; then
+      CMD="$CMD -c \"$@\""
+    fi
+    docker compose run --rm app $CMD
+    ;;
+  bundle)
+    shift
+    docker compose run --rm app bundle $@
+    ;;
+  db:migrate)
+    shift
+    docker compose run --rm app bundle exec rails db:migrate
+    ;;
+  rails)
+    shift
+    docker compose run --rm app bundle exec rails $@
+    ;;
+  importmap)
+    shift
+    docker compose run --rm app bin/importmap $@
+    ;;
+  db:rollback)
+    shift
+    docker compose run --rm app bundle exec rails db:rollback
+    ;;
+  rake)
+    shift
+    docker compose run --rm app bundle exec rake $@
+    ;;
+  gem)
+    shift
+    docker compose run --rm app bundle exec gem $@
+    ;;
+  rails)
+    shift
+    docker compose run --rm app bundle exec rails $@
+    ;;
+  console)
+    shift
+    docker compose run --rm app bundle exec rails c
+    ;;
+  logs)
+    shift
+    docker compose logs -f
+    ;;
+  yarn)
+    shift
+    docker compose run --rm app yarn $@
+    ;;
+  restart)
+    shift
+    docker compose restart app
+    ;;
+  perm:fix)
+    shift
+    sudo chown -R $USER:$USER app db spec
+    ;;
+  pristine)
+    echo "This will destroy your containers and replace them with new ones."
+
+    # Destroy containers and volumes
+    docker compose down -v
+
+    # Build images and create containers
+    docker compose up --build --force-recreate --no-start
+
+    # Bundle, create DB schema and run migrations
+    docker compose run --rm app yarn install
+    docker compose run --rm app bundle
+
+    # Ensure all containers are started
+    docker compose restart
+
+    echo "Creating data..."
+    docker compose run --rm app bundle exec rake db:create
+    docker compose run --rm app bundle exec rake db:schema:load
+    docker compose run --rm app bundle exec rake db:migrate
+    docker compose run --rm app bundle exec rake db:seed
+
+    echo "Creating data... Done! ;)"
+
+    # Ensure all containers are started
+    docker compose restart
+
+    echo "It may take few minutes to launch all containers."
+    echo "You can access your environment at https://demo.lvh.me:3000"
+  ;;
+  setup)
+    # Bundle, create DB schema and run migrations
+    docker compose run --rm app yarn install
+    docker compose run --rm app bundle
+    docker compose run --rm app bundle exec rake db:prepare
+    docker compose run --rm app bundle exec rake db:migrate
+    docker compose run --rm app bundle exec rake db:seed
+  ;;
+  guard)
+    shift
+    docker compose run --rm app bundle exec guard
+    ;;
+  *)
+    docker compose $@
+  ;;
+esac

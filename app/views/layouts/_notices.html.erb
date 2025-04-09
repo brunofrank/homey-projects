@@ -1,0 +1,17 @@
+<% if notice %>
+  <div class="notification is-info" data-controller="notifications"
+                                    data-action="notification-event->notifications#receivePush"
+                                    data-message="">
+    <button class="delete" data-action="click->notifications#hide"></button>
+    <p data-target="notifications.content"><%= notice %></p>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="notification is-warning" data-controller="notifications"
+                                       data-action="notification-event->notifications#receivePush"
+                                       data-message=">">
+    <button class="delete" data-action="click->notifications#hide"></button>
+    <p data-target="notifications.content"><%= alert %></p>
+  </div>
+<% end %>

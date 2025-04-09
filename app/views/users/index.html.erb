@@ -1,0 +1,45 @@
+<div data-controller="list">
+  <div class="list-buttons columns">
+    <div class="column">
+      <%= link_to new_user_path, class: 'button is-primary' do %>
+        New
+      <% end %>
+    </div>
+    <div class="column mass-actions" data-list-target="massActionsContainer">
+      <button data-action="click->list#destroySelected" data-destroy-url="<%= user_url(id: ':id:') %>.json" class="button is-danger">
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>...</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr data-list-target="items" data-edit-url="<%= edit_user_url(user) %>">
+        <td class="item-check">
+          <input type="checkbox" value="<%= user.id %>" data-action="change->list#itemSelect">
+        </td>
+        <td class="clickable" data-action="click->list#edit">
+          <%= user.name %>
+        </td>
+        <td class="clickable" data-action="click->list#edit">
+          <%= user.email %>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<div>
+
+<%= will_paginate @users %>

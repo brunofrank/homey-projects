@@ -1,0 +1,51 @@
+<style>
+  .control {
+    height: auto !important;
+  }
+</style>
+
+<% Setting.available_settings(scope: params[:scope] ? params[:scope].to_sym : :tenant).each do |setting| %>
+  <div class="columns" data-controller="settings">
+    <div class="column is-3">
+      <label><%= t("settings.parameters.#{setting[:name]}") %></label>
+    </div>
+    <div class="column">
+      <% if setting[:data_type] == Setting::Boolean %>
+        <div class="control">
+          <%= check_box_tag setting[:name], 'true', Setting[setting[:name]],
+                            data: {
+                              action: "click->settings#save",
+                              name: setting[:name],
+                              dataType: setting[:data_type]
+                            } %>
+        </div>
+      <% elsif setting[:list] %>
+        <div class="control select">
+          <div class="select">
+            <%= select_tag setting[:name], options_for_select(Setting.get_options_for_list(setting), Setting[setting[:name]]),
+                           prompt: 'Selecione uma opção',
+                           class: "select",
+                           data: {
+                             searchable: true,
+                             action: "change->settings#save",
+                             name: setting[:name],
+                             dataType: setting[:data_type]
+                           } %>
+          </div>
+        </div>
+      <% else %>
+        <div class="control">
+          <% mask = setting[:data_type] == Float ? 'negative-currency' : '' %>
+          <%= text_field_tag setting[:name], Setting[setting[:name]],
+                             class: "input",
+                             data: {
+                               mask_target: mask,
+                               action: "blur->settings#save",
+                               name: setting[:name],
+                               dataType: setting[:data_type]
+                             } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

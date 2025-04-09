@@ -1,0 +1,21 @@
+<nav class="navbar" role="navigation" aria-label="main navigation" data-controller="reveal" data-reveal-toggle-class="is-active">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="<%= root_url %>">
+      <i class="fa-solid fa-tv"></i>
+      &nbsp; &nbsp; <b>Homey Projects</b>
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-reveal-target="item"
+      data-action="click->reveal#toggle">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <%= render 'layouts/menu' if current_user.present? %>
+</nav>

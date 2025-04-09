@@ -1,0 +1,10 @@
+<aside class="menu">
+  <p class="menu-label">
+    General
+  </p>
+  <ul class="menu-list">
+    <%= configuration_menu_item "Company", edit_tenant_url(Current.tenant) %>
+    <%= configuration_menu_item "Settings", settings_url %>
+    <%= configuration_menu_item "Users", users_url %>
+  </ul>
+</aside>

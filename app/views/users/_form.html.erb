@@ -1,0 +1,30 @@
+
+<%= simple_form_for(@user) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs columns">
+    <div class="column is-2">
+      <%= f.input :role, collection: enum_options_for_select(User, :roles) %>
+    </div>
+    <div class="column is-one-half">
+      <%= f.input :name %>
+    </div>
+  </div>
+  <div class="form-inputs columns">
+    <div class="column">
+      <%= f.input :email %>
+    </div>
+    <div class="column is-one-quarter">
+      <%= f.input :password %>
+    </div>
+    <div class="column is-one-quarter">
+      <%= f.input :password_confirmation %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Save' %>
+    <%= link_to 'Cancel', users_path %>
+  </div>
+<% end %>

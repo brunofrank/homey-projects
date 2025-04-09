@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ZSHRC_FILE=~/.zshrc
+if [ -f "$ZSHRC_FILE" ]; then
+  echo "export PATH=\"${PWD/#$HOME/$HOME}/bin:\$PATH\"" >> ~/.zshrc
+else
+  echo "export PATH=\"${PWD/#$HOME/$HOME}/bin:\$PATH\"" >> ~/.profile
+fi
+
+echo "Homey devtools installed please reload your terminal"

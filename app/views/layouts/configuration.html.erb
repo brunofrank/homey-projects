@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <head>
+    <title>Homey</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= action_cable_meta_tag %>
+    <%= javascript_importmap_tags %>
+  </head>
+  </head>
+
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="<%= root_url %>">
+          <i class="fa-solid fa-tv"></i>
+          &nbsp; &nbsp; <b>Homey Projects</b>
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <%= render 'layouts/menu' if current_user.present? %>
+    </nav>
+    <section class="section">
+      <%= render 'layouts/notices' %>
+
+      <div class="container">
+        <div class="columns">
+          <div class="column is-2">
+            <%= render 'layouts/configuration_menu' %>
+          </div>
+          <div class="column is-10">
+            <%= render 'layouts/header_and_search' %>
+
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

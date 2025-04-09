@@ -1,0 +1,33 @@
+<div id="zion-nav-bar" class="navbar-menu" data-reveal-target="item">
+  <div class="navbar-start">
+
+    <%= link_to 'Dashboard', root_url, class: 'navbar-item' %>
+
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link">
+        General
+      </a>
+
+      <div class="navbar-dropdown">
+        <%= main_menu_item 'Users', users_url %>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar-end">
+    <div class="navbar-item has-dropdown is-hoverable user-profile-menu">
+      <%= link_to edit_user_url(current_user), class: 'navbar-link' do %>
+        <div class="generic-avatar">
+          <%= current_user.initials %>
+        </div>
+        <%= current_user.name || current_user.email %>
+      <% end %>
+
+      <div class="navbar-dropdown open-to-right">
+        <%= main_menu_item 'Settings', edit_tenant_url(Current.tenant) %>
+        <hr class="navbar-divider">
+        <%= main_menu_item 'Sign-out!', destroy_user_session_url %>
+      </div>
+    </div>
+  </div>
+</div>

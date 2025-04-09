@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Homey</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= action_cable_meta_tag %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <%= render 'layouts/navbar' %>
+    <section class="section">
+      <%# render 'layouts/notices' %>
+
+      <div class="container is-app is-widescreen">
+        <%= render 'layouts/header_and_search' if show_header? %>
+        <%= yield %>
+      </div>
+    </section>
+  </body>
+</html>

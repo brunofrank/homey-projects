@@ -1,0 +1,4 @@
+placeholrder:
+  cron: "0 0 0 0 0 0"
+  class: "PlaceHolder::Worker"
+  queue: default

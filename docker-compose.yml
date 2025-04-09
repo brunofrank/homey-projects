@@ -1,0 +1,67 @@
+services:
+  app: &app
+    build: ./
+    image: franklabs/homey:latest
+    command: bash -c "rm -f tmp/pids/server.pid && bin/dev"
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/app:cached
+      - ./bundle_cache:/bundle_cache
+    env_file:
+      - ./.environments/development/web
+      - ./.environments/development/database
+    tty: true
+    stdin_open: true
+    environment:
+      - BUNDLE_PATH=/bundle_cache
+
+  sidekiq:
+    build: ./
+    image: franklabs/homey:latest
+    command: bash -c "bundle exec sidekiq -C config/sidekiq.yml"
+    depends_on:
+      - app
+    volumes:
+      - ./:/usr/src/app:cached
+      - ./bundle_cache:/bundle_cache
+    env_file:
+      - ./.environments/development/web
+      - ./.environments/development/database
+    tty: true
+    stdin_open: true
+    environment:
+      - BUNDLE_PATH=/bundle_cache
+
+  redis:
+    image: redis
+    command: [sh, -c, "rm -rf /data/dump.rdb && redis-server"]
+
+  database:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    env_file:
+      - ./.environments/development/database
+    volumes:
+      - db_data:/var/lib/postgresql/data:cached
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
+
+volumes:
+  db_data:
+  bundle_cache:
+
+networks:
+  default:
+    name: homey
+    ipam:
+      config:
+        - subnet: 172.177.0.0/16

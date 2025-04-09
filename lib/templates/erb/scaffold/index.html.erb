@@ -1,0 +1,41 @@
+<div data-controller="list">
+  <div class="list-buttons columns">
+    <div class="column">
+      <%%= link_to new_<%= singular_route_name %>_path, class: 'button is-primary' do %>
+        New
+      <%% end %>
+    </div>
+    <div class="column mass-actions" data-list-target="massActionsContainer">
+      <button data-action="click->list#destroySelected" data-destroy-url="<%%= <%= singular_route_name %>_url(id: ':id:') %>.json" class="button is-danger">
+        Excluir
+      </button>
+    </div>
+  </div>
+
+  <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+      <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <th><%= attribute.human_name %></th>
+      <% end -%>
+      </tr>
+    </thead>
+    <tbody>
+    <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+      <tr data-list-target="items" data-edit-url="<%%= edit_<%= singular_route_name %>_url(<%= singular_table_name %>) %>">
+        <td class="item-check">
+          <input type="checkbox" value="<%%= <%= singular_table_name %>.id %>" data-action="change->list#itemSelect">
+        </td>
+      <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <td class="clickable" data-action="click->list#edit">
+      <%%= <%= singular_table_name %>.<%= attribute.name %> %>
+        </td>
+        <% end -%>
+      </tr>
+    <%% end %>
+    </tbody>
+  </table>
+<div>
+
+<%%= will_paginate @<%= plural_table_name %> %>

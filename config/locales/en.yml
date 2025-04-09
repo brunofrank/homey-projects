@@ -1,0 +1,9 @@
+en:
+  resources:
+    controllers:
+      misc:
+        title: Settings
+      users:
+        title: Users
+      tenants:
+        title: Company

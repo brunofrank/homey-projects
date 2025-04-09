@@ -1,0 +1,25 @@
+
+<%= simple_form_for(@tenant) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs columns">
+    <div class="column is-one-quarter">
+      <%= f.input :subdomain %>
+    </div>
+  </div>
+
+  <div class="form-inputs columns">
+    <div class="column is-one-quarter">
+      <%= f.input :latitude, as: :string %>
+    </div>
+    <div class="column is-one-quarter">
+      <%= f.input :longitude, as: :string %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Save' %>
+    <%= link_to 'Cancel', tenants_path %>
+  </div>
+<% end %>

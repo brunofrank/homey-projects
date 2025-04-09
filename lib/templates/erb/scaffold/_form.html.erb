@@ -1,0 +1,18 @@
+<%# frozen_string_literal: true %>
+<%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
+  <%%= f.error_notification %>
+  <%%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs columns">
+  <%- attributes.each do |attribute| -%>
+    <div class="column is-one-quarter">
+      <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %> %>
+    </div>
+  <%- end -%>
+  </div>
+
+  <div class="form-actions">
+    <%%= f.button :submit, 'Save' %>
+    <%%= link_to 'Cancel', <%= plural_table_name %>_path %>
+  </div>
+<%% end %>

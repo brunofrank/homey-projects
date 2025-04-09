@@ -1,0 +1,27 @@
+<div class="columns page-title">
+  <div class="column">
+    <h1 class="title">
+      <% if show_back? %>
+        <%= link_to({ controller: back_controller, action: :index }, class: 'back-arrow') do %>
+          <i class="fas fa-chevron-left"></i>
+        <% end %>
+      <% end %>
+      <%= page_title %>
+    </h1>
+  </div>
+
+  <div class="column is-one-third">
+    <% if show_search? %>
+      <form action="<%= url_for controller: controller_name, action: action_name %>" id="simple-search">
+        <div class="field">
+          <p class="control has-icons-left">
+            <input id="main-search" class="input" type="text" name="q" placeholder="Search" value="<%= params[:q] %>">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+        </div>
+      </form>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+$primary: #363636;
+
+.container{
+  border-top: 5px solid #363636 !important;
+}
+
+.pagination-link.is-current {
+  background-color: #363636 !important;
+}
+
+.pagination-previous a,
+.pagination-next a {
+  color: #363636 !important;
+}
+
+table td.clickable {
+  color: #363636!important;
+}
+
+.switch-light {
+	&:checked + .switch-btn {
+    background: #363636 !important;
+    color: #363636 !important;
+	}
+}
+
+.navbar {
+  background-color: #363636 !important;
+  color: #fff !important;
+}
+
+.navbar .navbar-brand > .navbar-item,
+.navbar .navbar-brand .navbar-link {
+  color: #fff !important;
+}
+
+.navbar .navbar-brand > a.navbar-item:focus, .navbar .navbar-brand > a.navbar-item:hover, .navbar .navbar-brand > a.navbar-item.is-active,
+.navbar .navbar-brand .navbar-link:focus,
+.navbar .navbar-brand .navbar-link:hover,
+.navbar .navbar-brand .navbar-link.is-active {
+  background-color: #292929 !important;
+  color: #fff !important;
+}
+
+.navbar .navbar-brand .navbar-link::after {
+  border-color: #fff !important;
+}
+
+.navbar .navbar-burger {
+  color: #fff !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar .navbar-start > .navbar-item,
+  .navbar .navbar-start .navbar-link,
+  .navbar .navbar-end > .navbar-item,
+  .navbar .navbar-end .navbar-link {
+    color: #fff !important;
+  }
+  .navbar .navbar-start > a.navbar-item:focus, .navbar .navbar-start > a.navbar-item:hover, .navbar .navbar-start > a.navbar-item.is-active,
+  .navbar .navbar-start .navbar-link:focus,
+  .navbar .navbar-start .navbar-link:hover,
+  .navbar .navbar-start .navbar-link.is-active,
+  .navbar .navbar-end > a.navbar-item:focus,
+  .navbar .navbar-end > a.navbar-item:hover,
+  .navbar .navbar-end > a.navbar-item.is-active,
+  .navbar .navbar-end .navbar-link:focus,
+  .navbar .navbar-end .navbar-link:hover,
+  .navbar .navbar-end .navbar-link.is-active {
+    background-color: #292929 !important;
+    color: #fff !important;
+  }
+  .navbar .navbar-start .navbar-link::after,
+  .navbar .navbar-end .navbar-link::after {
+    border-color: #fff !important;
+  }
+  .navbar .navbar-item.has-dropdown:focus .navbar-link,
+  .navbar .navbar-item.has-dropdown:hover .navbar-link,
+  .navbar .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: #292929 !important;
+    color: #fff !important;
+  }
+  .navbar .navbar-dropdown a.navbar-item.is-active {
+    background-color: #363636 !important;
+    color: #fff !important;
+  }
+}
