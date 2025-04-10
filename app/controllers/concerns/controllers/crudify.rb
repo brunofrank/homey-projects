@@ -6,7 +6,7 @@ module Controllers::Crudify
     before_action :set_resource, only: %i[show edit update]
 
     show_search only: :index
-    show_back only: %i[new edit]
+    show_back only: %i[new edit show]
 
     helper_method :form_resources
   end

@@ -1,0 +1,5 @@
+<%= turbo_stream.replace('project_comments') do %>
+	<%= turbo_frame_tag :project_comments do %>
+		<%= render @project.comments %>
+	<% end %>
+<% end %>
