@@ -1,0 +1,16 @@
+
+<%= simple_form_for([@project, Comment.new], html: {
+                                               data: {
+                                                controller: 'form'
+                                               }
+                                             }) do |f| %>
+  <div class="form-inputs columns">
+    <div class="column">
+      <%= f.input :content, label: false, input_html: {
+                                            data: {
+                                              action: 'keydown.enter->form#submitOnEnter'
+                                            }
+                                          } %>
+    </div>
+  </div>
+<% end %>
