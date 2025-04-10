@@ -55,6 +55,8 @@ module Controllers::Crudify
 
   def create
     @resource = resource_context.new(resource_params)
+    @resource.send("#{super_resouce_relation_field}=", @super_resource) if super_model_klass.present?
+
     instance_variable_set("@#{model_klass.to_s.tableize.singularize.gsub('/', '_')}", @resource)
 
     respond_to do |format|
@@ -136,6 +138,10 @@ module Controllers::Crudify
 
   def super_resource_id
     params["#{super_model_klass.to_s.underscore}_id"]
+  end
+
+  def super_resouce_relation_field
+    super_model_klass.to_s.tableize.singularize.gsub('/', '_')
   end
 
   def set_super_resource

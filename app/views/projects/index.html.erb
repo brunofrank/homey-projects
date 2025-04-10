@@ -34,7 +34,8 @@
           <%= enum_l project, :status %>
         </td>
         <td>
-          <%= link_to 'Details', project_url(project) %>
+          <%= link_to 'Details', project_url(project) %> |
+          <%= link_to 'Comments', project_comments_url(project) %>
         </td>
       </tr>
     <% end %>
