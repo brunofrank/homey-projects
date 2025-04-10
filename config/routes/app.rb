@@ -1,4 +1,4 @@
-root 'home#index'
+root 'projects#index'
 
 devise_for :users, path: 'auth', path_names: {
                                    sign_in: 'login',
@@ -11,7 +11,9 @@ devise_for :users, path: 'auth', path_names: {
 
 resources :tenants
 resources :users
-resources :projects
+resources :projects do
+  resources :comments
+end
 
 get '/settings' => 'misc#settings', as: :settings
 post '/settings/save' => 'misc#save_setting', as: :save_setting
