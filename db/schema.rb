@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_14_094038) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_09_143946) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "projects", force: :cascade do |t|
+    t.bigint "tenant_id", null: false
+    t.string "name"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_projects_on_name"
+    t.index ["tenant_id"], name: "index_projects_on_tenant_id"
+  end
 
   create_table "settings", force: :cascade do |t|
     t.integer "tenant_id", null: false
@@ -66,6 +76,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_094038) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "projects", "tenants"
   add_foreign_key "settings", "tenants"
   add_foreign_key "users", "tenants"
 end
