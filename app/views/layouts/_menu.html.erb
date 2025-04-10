@@ -2,16 +2,7 @@
   <div class="navbar-start">
 
     <%= link_to 'Dashboard', root_url, class: 'navbar-item' %>
-
-    <div class="navbar-item has-dropdown is-hoverable">
-      <a class="navbar-link">
-        General
-      </a>
-
-      <div class="navbar-dropdown">
-        <%= main_menu_item 'Users', users_url %>
-      </div>
-    </div>
+    <%= link_to 'Projetos', projects_url, class: 'navbar-item' %>
   </div>
 
   <div class="navbar-end">
