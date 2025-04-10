@@ -7,7 +7,8 @@ module Controllers
     end
 
     def show_back?
-      self.class.show_back_actions&.include?(action_name.to_sym)
+      self.class.show_back_actions.include?(:all) ||
+        self.class.show_back_actions&.include?(action_name.to_sym)
     end
 
     def back_controller
@@ -23,8 +24,8 @@ module Controllers
         @show_back || []
       end
 
-      def show_back(only:)
-        @show_back = [only].flatten
+      def show_back(arg=nil, only: nil)
+        @show_back = [only || arg].flatten.compact
       end
 
       def hide_back!
